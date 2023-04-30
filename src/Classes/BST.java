@@ -1,8 +1,5 @@
 package Classes;
 
-/************************  BST.java  **************************
- *                 generic binary search tree
- */
 import java.util.*;
 
 public class BST<T extends Comparable<T>> extends BinaryTree<T> {
@@ -25,7 +22,7 @@ public class BST<T extends Comparable<T>> extends BinaryTree<T> {
 
      public void insert(T el) {
           BTNode<T> p = root, prev = null;
-          while (p != null) { // find a place for inserting new node;
+          while (p != null) {
                prev = p;
                int result = el.compareTo(p.data);
 
@@ -36,7 +33,7 @@ public class BST<T extends Comparable<T>> extends BinaryTree<T> {
                else
                     p = p.right;
           }
-          if (root == null) // tree is empty;
+          if (root == null)
                root = new BTNode<T>(el);
           else if (el.compareTo(prev.data) < 0)
                prev.left = new BTNode<T>(el);
@@ -58,8 +55,8 @@ public class BST<T extends Comparable<T>> extends BinaryTree<T> {
 
      public void deleteByCopying(T el) {
           BTNode<T> node, p = root, prev = null;
-          while (p != null && !p.data.equals(el)) { // find the node p
-               prev = p; // with element el;
+          while (p != null && !p.data.equals(el)) {
+               prev = p;
                if (el.compareTo(p.data) < 0)
                     p = p.left;
                else
@@ -67,23 +64,23 @@ public class BST<T extends Comparable<T>> extends BinaryTree<T> {
           }
           node = p;
           if (p != null && p.data.equals(el)) {
-               if (node.right == null) // node has no right child;
+               if (node.right == null)
                     node = node.left;
-               else if (node.left == null) // no left child for node;
+               else if (node.left == null)
                     node = node.right;
                else {
-                    BTNode<T> tmp = node.left; // node has both children;
-                    BTNode<T> previous = node; // 1.
-                    while (tmp.right != null) { // 2. find the rightmost
-                         previous = tmp; // position in the
-                         tmp = tmp.right; // left subtree of node;
+                    BTNode<T> tmp = node.left;
+                    BTNode<T> previous = node;
+                    while (tmp.right != null) {
+                         previous = tmp;
+                         tmp = tmp.right;
                     }
-                    node.data = tmp.data; // 3. overwrite the reference
-                                          // to the element being deleted;
-                    if (previous == node) // if node's left child's
-                         previous.left = tmp.left; // right subtree is null;
+                    node.data = tmp.data;
+
+                    if (previous == node)
+                         previous.left = tmp.left;
                     else
-                         previous.right = tmp.left; // 4.
+                         previous.right = tmp.left;
                }
                if (p == root)
                     root = node;
@@ -99,8 +96,8 @@ public class BST<T extends Comparable<T>> extends BinaryTree<T> {
 
      public void deleteByMerging(T el) {
           BTNode<T> tmp, node, p = root, prev = null;
-          while (p != null && !p.data.equals(el)) { // find the node p
-               prev = p; // with element el;
+          while (p != null && !p.data.equals(el)) {
+               prev = p;
                if (el.compareTo(p.data) < 0)
                     p = p.right;
                else
@@ -108,25 +105,23 @@ public class BST<T extends Comparable<T>> extends BinaryTree<T> {
           }
           node = p;
           if (p != null && p.data.equals(el)) {
-               if (node.right == null) // node has no right child: its left
-                    node = node.left; // child (if any) is attached to its parent;
-               else if (node.left == null) // node has no left child: its right
-                    node = node.right; // child is attached to its parent;
-               else { // be ready for merging subtrees;
-                    tmp = node.left; // 1. move left
-                    while (tmp.right != null) // 2. and then right as far as
-                         tmp = tmp.right; // possible;
-                    tmp.right = // 3. establish the link between
-                              node.right; // the rightmost node of the left
-                                          // subtree and the right subtree;
-                    node = node.left; // 4.
+               if (node.right == null)
+                    node = node.left;
+               else if (node.left == null)
+                    node = node.right;
+               else {
+                    tmp = node.left;
+                    while (tmp.right != null)
+                         tmp = tmp.right;
+                    tmp.right = node.right;
+                    node = node.left;
                }
                if (p == root)
                     root = node;
                else if (prev.left == p)
                     prev.left = node;
                else
-                    prev.right = node; // 5.
+                    prev.right = node;
           } else if (root != null)
                throw new java.util.NoSuchElementException("el " + el + " is not in the tree");
           else
@@ -163,8 +158,8 @@ public class BST<T extends Comparable<T>> extends BinaryTree<T> {
                     visit(p);
                     if (p.right != null)
                          travStack.push(p.right);
-                    if (p.left != null) // left child pushed after right
-                         travStack.push(p.left);// to be on the top of the stack;
+                    if (p.left != null)
+                         travStack.push(p.left);
                }
           }
      }
@@ -173,19 +168,19 @@ public class BST<T extends Comparable<T>> extends BinaryTree<T> {
           BTNode<T> p = root;
           Stack<BTNode<T>> travStack = new Stack<BTNode<T>>();
           while (p != null) {
-               while (p != null) { // stack the right child (if any)
-                    if (p.right != null) // and the node itself when going
-                         travStack.push(p.right); // to the left;
+               while (p != null) {
+                    if (p.right != null)
+                         travStack.push(p.right);
                     travStack.push(p);
                     p = p.left;
                }
-               p = travStack.pop(); // pop a node with no left child
-               while (!travStack.isEmpty() && p.right == null) { // visit it and all
-                    visit(p); // nodes with no right child;
+               p = travStack.pop();
+               while (!travStack.isEmpty() && p.right == null) {
+                    visit(p);
                     p = travStack.pop();
                }
-               visit(p); // visit also the first node with
-               if (!travStack.isEmpty()) // a right child (if any);
+               visit(p);
+               if (!travStack.isEmpty())
                     p = travStack.pop();
                else
                     p = null;
@@ -196,7 +191,7 @@ public class BST<T extends Comparable<T>> extends BinaryTree<T> {
           BTNode<T> p = root;
           Stack<BTNode<T>> travStack = new Stack<BTNode<T>>(),
                     output = new Stack<BTNode<T>>();
-          if (p != null) { // left-to-right postorder = right-to-left preorder;
+          if (p != null) {
                travStack.push(p);
                while (!travStack.isEmpty()) {
                     p = travStack.pop();

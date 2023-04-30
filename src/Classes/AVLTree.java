@@ -51,9 +51,9 @@ public class AVLTree<T extends Comparable<T>> extends BST<T> {
       this.balance();
    }
 
-   public void deleteAVL(T el) {
-      // to be completed by students
-
+   public void deleteAVL(T element) {
+      super.deleteByCopying(element);
+      this.balance();
    }
 
    protected void balance() {
@@ -81,8 +81,8 @@ public class AVLTree<T extends Comparable<T>> extends BST<T> {
             System.out.println("Balance factor = " + balanceFactor);
             System.out.println("Balancing node with el: " + root.data);
 
-            if (getRightAVL().getBalanceFactor() == 0) /// special case that cannot be done
-               rotateLeft(); /// by double rotations
+            if (getRightAVL().getBalanceFactor() == 0)
+               rotateLeft();
             else if (getRightAVL().getBalanceFactor() > 0)
                rotateLeft();
             else
@@ -100,7 +100,14 @@ public class AVLTree<T extends Comparable<T>> extends BST<T> {
 
    protected void rotateRight() {
       System.out.println("RIGHT ROTATION");
-      // to be completed by students
+      BTNode<T> temp = root.right;
+      this.root.right = this.root.left;
+      this.root.left = this.root.right.left;
+      this.root.right.left = this.root.right.right;
+      this.root.right.right = temp;
+      T value = (T) this.root.data;
+      this.root.data = this.root.right.data;
+      this.root.right.data = value;
    }
 
    protected void rotateLeft() {
@@ -129,7 +136,10 @@ public class AVLTree<T extends Comparable<T>> extends BST<T> {
 
    protected void rotateRightLeft() {
       System.out.println("Double Rotation...");
-      // to be completed by students
+      this.getRightAVL().rotateRight();
+      this.getRightAVL().adjustHeight();
+      this.rotateLeft();
+      this.adjustHeight();
 
    }
 

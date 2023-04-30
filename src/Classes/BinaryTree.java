@@ -33,7 +33,6 @@ public class BinaryTree<T extends Comparable<T>> {
       Queue<BTNode<T>> q = new LinkedList<>();
       q.add(root);
 
-      // Do level order traversal until we find the first empty left or right child.
       while (!q.isEmpty()) {
          temp = q.poll();
 
@@ -51,7 +50,6 @@ public class BinaryTree<T extends Comparable<T>> {
       }
    }
 
-   // delete by copying last node
    public void deleteByCopying(T data) {
       if (root == null)
          throw new UnsupportedOperationException("Tree is empty!");
@@ -112,11 +110,10 @@ public class BinaryTree<T extends Comparable<T>> {
          parentNode.right = null;
    }
 
-   public void levelOrderTraversal() { // BreadthFirstTraversal
+   public void levelOrderTraversal() {
       levelOrderTraversal(root);
    }
 
-   // BreadthFirst Traversal
    protected void levelOrderTraversal(BTNode<T> root) {
       if (root == null)
          return;
@@ -228,7 +225,6 @@ public class BinaryTree<T extends Comparable<T>> {
       printTree(root, "", true);
    }
 
-   // Print the binary tree
    protected void printTree(BTNode<T> currPtr, String indent, boolean last) {
       if (indent.equals(""))
          System.out.print("Root");
