@@ -30,4 +30,11 @@ public class Dictionary {
             System.out.println(e.getMessage());
         }
     }
+
+    public void addWord(String word) throws WordAlreadyExistsException {
+        if (this.dictionary.search(word)) {
+            throw new WordAlreadyExistsException();
+        }
+        this.dictionary.insertAVL(word);
+    }
 }
