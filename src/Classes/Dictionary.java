@@ -23,12 +23,16 @@ public class Dictionary {
             String value = readFile.nextLine();
             while (value != null) {
                 if (!this.dictionary.search(value))
-                    this.dictionary.insert(value);
+                    this.dictionary.insertAVL(value);
                 value = readFile.nextLine();
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public AVLTree<String> getDictionary() {
+        return dictionary;
     }
 
     public void addWord(String word) throws WordAlreadyExistsException {
@@ -37,4 +41,12 @@ public class Dictionary {
         }
         this.dictionary.insertAVL(word);
     }
+
+    public boolean findWord(String word) throws WordNotFoundException {
+        if (this.dictionary.search(word)) {
+            throw new WordNotFoundException();
+        }
+        return true;
+    }
+
 }

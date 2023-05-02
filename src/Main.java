@@ -9,5 +9,6 @@ public class Main {
         Dictionary dictionary = new Dictionary(file);
         long end = System.currentTimeMillis();
         System.out.println("Total: " + (end - start)/1000 + " Seconds");
+        dictionary.getDictionary().printTree();
     }
 }
