@@ -43,10 +43,17 @@ public class Dictionary {
     }
 
     public boolean findWord(String word) throws WordNotFoundException {
-        if (this.dictionary.search(word)) {
+        if (!this.dictionary.search(word)) {
             throw new WordNotFoundException();
         }
         return true;
     }
 
+    public void deleteWord(String word) throws WordNotFoundException {
+        if (!this.dictionary.search(word)) {
+            throw new WordNotFoundException();
+        }
+        this.dictionary.deleteAVL(word);
+    }
+    
 }
