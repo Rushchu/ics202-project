@@ -58,6 +58,7 @@ public class Main {
             menu();
             choice = input.nextInt();
         }
+        input.close();
     }
 
     public static void menu() {
