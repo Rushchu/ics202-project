@@ -60,6 +60,7 @@ public class Main {
             choice = input.nextInt();
         }
         input.close();
+        System.out.println("Thank you. See u soon.");
     }
 
     public static void menu() {
